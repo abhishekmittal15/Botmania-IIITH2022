@@ -2,6 +2,7 @@ from collections import deque
 from math import inf
 from pprint import pprint
 
+
 def dist(pt1,pt2):
     x1,y1=pt1
     x2,y2=pt2
@@ -10,7 +11,6 @@ def dist(pt1,pt2):
 def enemy_near(troop,board):
     x,y = troop
     directions = [(-1,0),(1,0),(0,1),(0,-1)]
-
     for dx,dy in directions:
         nx,ny=x+dx,y+dy
         if(nx<0 or nx>14 or ny<0 or ny>14):
@@ -19,6 +19,17 @@ def enemy_near(troop,board):
             return (nx,ny)
 
     return None
+
+def get_neighbour_list(x,y):
+    neighbours=[]
+    directions = [(-1,0),(1,0),(0,1),(0,-1)]
+    for dx,dy in directions:
+        nx,ny=x+dx,y+dy
+        if nx<0 or nx>14 or ny<0 or ny>14:
+            continue
+        neighbours.append((nx,ny))
+    return neighbours
+
 
 def bfs(troop,board):
     q = deque([troop])
@@ -37,16 +48,19 @@ def bfs(troop,board):
             if x+y==14:
                 ans=x,y
                 break
-            for dx,dy in directions:
-                nx,ny=x+dx,y+dy
-                if nx<0 or nx>14 or ny<0 or ny>14:
-                    continue
+            # get the initial neighbours list 
+            for nx,ny in get_neighbour_list(x,y):
                 if board[nx][ny] in [1,2] or (nx,ny) in visited:
                     continue
-                # print(nx,ny)
+            # validate each of the initial neighbours, if enemy in next neighbours
+                nneighbours = get_neighbour_list(nx,ny)
+                enemy = any(board[nnx][nny]==2 for nnx,nny in nneighbours)
+                if enemy:
+                    continue
                 q.append((nx,ny))
                 parent[(nx,ny)]=x,y
                 visited.add((nx,ny))
+
     if ans==None:
         return inf,None,troop
 
