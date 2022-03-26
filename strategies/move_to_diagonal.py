@@ -1,6 +1,7 @@
 from collections import deque
 from math import inf
 from pprint import pprint
+import random
 
 
 def dist(pt1,pt2):
@@ -10,7 +11,7 @@ def dist(pt1,pt2):
 
 def enemy_near(troop,board):
     x,y = troop
-    directions = [(-1,0),(1,0),(0,1),(0,-1)]
+    directions = [(0,-1),(1,0),(0,1),(-1,0)]
     for dx,dy in directions:
         nx,ny=x+dx,y+dy
         if(nx<0 or nx>14 or ny<0 or ny>14):
@@ -22,7 +23,8 @@ def enemy_near(troop,board):
 
 def get_neighbour_list(x,y):
     neighbours=[]
-    directions = [(-1,0),(1,0),(0,1),(0,-1)]
+    directions = [(0,-1),(1,0),(0,1),(-1,0)]
+    random.shuffle(directions)
     for dx,dy in directions:
         nx,ny=x+dx,y+dy
         if nx<0 or nx>14 or ny<0 or ny>14:
@@ -38,7 +40,6 @@ def bfs(troop,board):
     parent[troop]=troop
     distance=-1
     ans=None;
-    directions = [(-1,0),(1,0),(0,1),(0,-1)]
     visited.add(troop)
     while q and not ans:
         sz=len(q)

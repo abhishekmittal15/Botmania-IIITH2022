@@ -1,26 +1,26 @@
-from move_to_diagonal import solution
+from global_test import solution
 from pprint import pprint
 
 row = [0] * 15
 board = []
 for i in range(15):
     board.append(row.copy())
-board[0][0] = 1
-board[0][1] = 1
-board[0][2] = 1
-board[0][3] = 1
+board[14][0] = 1
+board[10][4] = 1
+board[10][0] = 1
+# board[0][3] = 1
 
-board[1][0] = 1
-board[1][1] = 1
-board[1][2] = 1
+# board[1][0] = 1
+# board[1][1] = 1
+# board[1][2] = 1
 
-board[2][0] = 1
-board[2][1] = 1
+# board[2][0] = 1
+# board[2][1] = 1
 
-board[3][0] = 1
+# board[3][0] = 1
 
 state = {"hill": [0, 14], "board": board}
-for i in range(400):
+for i in range(5):
     print("Iteration ", i)
     move = solution(state)
     if (move == ()):

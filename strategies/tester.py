@@ -4,7 +4,6 @@ import json
 from pprint import pprint
 
 def main():
-    random.seed(10)
     board = []
     choices = [0]
     for i in range(15):
